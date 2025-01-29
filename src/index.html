@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      rel="icon"
+      type="image/png"
+      href="favicon/monitor.png"
+      sizes="16x16"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Analytics</title>
     <style>
       html,
       body {
@@ -71,17 +76,18 @@
         margin-bottom: 30px;
       }
 
+      .chart-container-stacked {
+        flex: 1;
+        min-width: 500px;
+        width: 100%;
+        margin-bottom: 30px;
+      }
+
       canvas {
         background: white;
         border-radius: 8px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
-
-      .filter-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
+        width: 100%;
       }
     </style>
   </head>
@@ -89,48 +95,39 @@
     <div class="sidebar">
       <h2>Dashboard</h2>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Reports</a></li>
-        <li><a href="#">Settings</a></li>
+        <li><a href="index.html">Analytics</a></li>
+        <li><a href="reports.html">Reports</a></li>
       </ul>
     </div>
 
     <div class="content">
-      <div class="filter-row">
-        <button title="filter" class="filter">
-          <svg viewBox="0 0 512 512" height="1em">
-            <path
-              d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
-            ></path>
-          </svg>
-        </button>
-        <button class="filterbtn">Day</button>
-        <button class="filterbtn">Month</button>
-        <button class="filterbtn">Year</button>
-      </div>
+      <!-- first char row -->
       <div class="chart-row">
         <div class="chart-container">
-          <canvas id="lineGraph"></canvas>
+          <canvas id="lineChart-NutrientSpecificDemandAcrossStages"></canvas>
         </div>
         <div class="chart-container">
-          <canvas id="forecastChart"></canvas>
+          <canvas id="stackedAreaChart-CropRotationNutrientImpact"></canvas>
         </div>
+      </div>
+      <!-- second chart row -->
+      <div class="chart-container-stacked">
+        <canvas id="timeSeriesForecastChart"></canvas>
+      </div>
+      <div class="chart-container-stacked">
+        <canvas id="sugarcaneGrowthChart"></canvas>
+        <img
+          id="sugarcaneImage"
+          src="images/sugarcane.png"
+          alt="Sugarcane"
+          style="display: none"
+        />
+      </div>
+      <div class="chart-container">
+        <canvas id="combinedChart"></canvas>
       </div>
     </div>
 
-    <script type="module" src="lineGraph.js"></script>
-    <script type="module" src="multiple.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const buttons = document.querySelectorAll(".filterbtn");
-        buttons.forEach((button) => {
-          button.addEventListener("click", function () {
-            buttons.forEach((btn) => btn.classList.remove("active"));
-            this.classList.add("active");
-          });
-        });
-      });
-    </script>
+    <script type="module" src="charts.js"></script>
   </body>
 </html>
